@@ -32,15 +32,12 @@ class GameManager:
 
     def main(self):
         """The main gameplay loop for the Tic-Tac-Toe game"""
-        # Game loop
         while True:
             self.display_board()
-
             if self.check_for_winner():
                 return
             if self.check_for_tie():
                 return
-
             self.take_current_player_turn()
             self.switch_players()
 
