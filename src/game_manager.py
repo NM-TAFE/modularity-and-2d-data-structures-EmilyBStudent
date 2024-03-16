@@ -15,6 +15,8 @@ class GameManager:
 
     def __init__(self):
         """Initialise the Tic-Tac-Toe game"""
+        # Map player numbers to visual representation as single characters of
+        # text. 0 represents an empty space.
         self.player_map = {
             0: ' ',
             1: 'X',
