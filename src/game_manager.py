@@ -34,15 +34,9 @@ class GameManager:
             # rather than accessing it directly.
             self.ui.display_2d_board(self.board.board)
 
-            # Check for win
-            winner = self.board.find_winner()
-            if winner:
-                self.ui.announce_winner(winner)
+            if self.check_for_winner():
                 return
-
-            # Check for tie
-            if self.board.is_board_full():
-                self.ui.announce_tie()
+            if self.check_for_tie():
                 return
 
             # Get next move
@@ -59,6 +53,29 @@ class GameManager:
                 self.current_player = 1
             else:
                 self.current_player += 1
+
+    def check_for_winner(self):
+        """
+        Check if one of the players has won the game. If so, announce the
+        winner.
+        :returns: True if a winner is found, False if not
+        """
+        winner = self.board.find_winner()
+        if winner:
+            self.ui.announce_winner(winner)
+            return True
+        return False
+
+    def check_for_tie(self):
+        """
+        Check if the game has ended in a tie. If so, announce the fact to the
+        players
+        :returns: True if the game has ended in a tie, False if not
+        """
+        if self.board.is_board_full():
+            self.ui.announce_tie()
+            return True
+        return False
 
 
 if __name__ == "__main__":
