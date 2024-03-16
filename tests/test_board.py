@@ -60,12 +60,13 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(1, self.board.find_horizontal_winner())
 
     def test_horizontal_winner_found_in_last_row(self):
-        self.board.add_player_move(1, 6)
-        self.board.add_player_move(2, 3)
-        self.board.add_player_move(1, 7)
-        self.board.add_player_move(2, 4)
-        self.board.add_player_move(1, 8)
-        self.assertEqual(1, self.board.find_horizontal_winner())
+        self.board.add_player_move(1, 0)
+        self.board.add_player_move(2, 6)
+        self.board.add_player_move(1, 3)
+        self.board.add_player_move(2, 7)
+        self.board.add_player_move(1, 4)
+        self.board.add_player_move(2, 8)
+        self.assertEqual(2, self.board.find_horizontal_winner())
 
     def test_no_horizontal_winner_found_in_empty_board(self):
         self.assertEqual(0, self.board.find_horizontal_winner())

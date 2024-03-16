@@ -71,8 +71,8 @@ class Board:
         """
         for row in self.board:
             if row[0] != 0 and all_items_in_collection_equal(row):
-                return True
-        return False
+                return row[0]
+        return 0
 
     def find_vertical_winner(self):
         """
