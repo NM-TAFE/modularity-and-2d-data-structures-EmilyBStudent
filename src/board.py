@@ -95,7 +95,7 @@ class Board:
             column_data = []
             for row in range(0, self.size):
                 column_data.append(self._board[row][column])
-            if all_items_in_collection_equal(column_data):
+            if column_data[0] != 0 and all_items_in_collection_equal(column_data):
                 return column_data[0]
         return 0
 
@@ -109,7 +109,8 @@ class Board:
         diagonal_data = []
         for row_and_column in range(0, self.size):
             diagonal_data.append(self._board[row_and_column][row_and_column])
-        if all_items_in_collection_equal(diagonal_data):
+        if (diagonal_data[0] != 0 and
+                all_items_in_collection_equal(diagonal_data)):
             return diagonal_data[0]
 
         diagonal_data = []
@@ -117,7 +118,8 @@ class Board:
         for row in range(0, self.size):
             diagonal_data.append(self._board[row][column])
             column -= 1
-        if all_items_in_collection_equal(diagonal_data):
+        if (diagonal_data[0] != 0 and
+                all_items_in_collection_equal(diagonal_data)):
             return diagonal_data[0]
         return 0
 
