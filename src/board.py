@@ -16,10 +16,17 @@ class Board:
         """
         self.size = size
         self.empty = 0
-        self.board = []
+        self._board = []
         for row_number in range(0, size):
             row = [self.empty] * size
-            self.board.append(row)
+            self._board.append(row)
+
+    def get_board_data(self):
+        """
+        Return the 2D data structure representing the board state.
+        :returns: the data in self._board
+        """
+        return self._board
 
     def add_player_move(self, player, move):
         """
@@ -42,10 +49,10 @@ class Board:
         column = move % self.size
 
         # Check that the selected cell is empty.
-        if self.board[row][column] != self.empty:
+        if self._board[row][column] != self.empty:
             return False
 
-        self.board[row][column] = player
+        self._board[row][column] = player
         return True
 
     def find_winner(self):
@@ -69,7 +76,7 @@ class Board:
         :returns: the number of the winning player as an integer, or 0 if there
             is no winner.
         """
-        for row in self.board:
+        for row in self._board:
             if row[0] != 0 and all_items_in_collection_equal(row):
                 return True
         return False
@@ -83,7 +90,7 @@ class Board:
         for column in range(0, self.size):
             column_data = []
             for row in range(0, self.size):
-                column_data.append(self.board[row][column])
+                column_data.append(self._board[row][column])
             if all_items_in_collection_equal(column_data):
                 return column_data[0]
         return 0
@@ -97,14 +104,14 @@ class Board:
         """
         diagonal_data = []
         for row_and_column in range(0, self.size):
-            diagonal_data.append(self.board[row_and_column][row_and_column])
+            diagonal_data.append(self._board[row_and_column][row_and_column])
         if all_items_in_collection_equal(diagonal_data):
             return diagonal_data[0]
 
         diagonal_data = []
         column = self.size - 1
         for row in range(0, self.size):
-            diagonal_data.append(self.board[row][column])
+            diagonal_data.append(self._board[row][column])
             column -= 1
         if all_items_in_collection_equal(diagonal_data):
             return diagonal_data[0]
@@ -115,7 +122,7 @@ class Board:
         Check whether the board is full (so that no more moves can be made).
         :return: True if the board is full, False if not.
         """
-        for row in self.board:
+        for row in self._board:
             if self.empty in row:
                 return False
         return True

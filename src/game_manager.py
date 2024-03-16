@@ -33,10 +33,7 @@ class GameManager:
         """The main gameplay loop for the Tic-Tac-Toe game"""
         # Game loop
         while True:
-            # Print board
-            # TODO: Maybe I should have a getter method for the board data
-            # rather than accessing it directly.
-            self.ui.display_2d_board(self.board.board)
+            self.display_board()
 
             if self.check_for_winner():
                 return
@@ -54,6 +51,9 @@ class GameManager:
 
             self.switch_players()
 
+    def display_board(self):
+        """Display the current state of the game board."""
+        self.ui.display_2d_board(self.board.get_board_data())
 
     def check_for_winner(self):
         """
