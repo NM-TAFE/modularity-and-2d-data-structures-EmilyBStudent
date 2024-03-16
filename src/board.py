@@ -16,10 +16,20 @@ class Board:
         """
         self.size = size
         self.empty = 0
-        self.board = []
+        self._minimum_move = 0
+        self._maximum_move = self.size*self.size - 1
+
+        self._board = []
         for row_number in range(0, size):
             row = [self.empty] * size
-            self.board.append(row)
+            self._board.append(row)
+
+    def get_board_data(self):
+        """
+        Return the 2D data structure representing the board state.
+        :returns: the data in self._board
+        """
+        return self._board
 
     def add_player_move(self, player, move):
         """
@@ -31,8 +41,9 @@ class Board:
         :returns: True if the move was successful, False if the move is invalid
             based on the board state
         """
-        # Check whether the move is outside the maximum bound of the board.
-        if move >= self.size * self.size:
+        # Check whether the move is outside the minimum or maximum bounds of
+        # the board.
+        if move < self._minimum_move or move > self._maximum_move:
             return False
 
         # The move is provided as an integer from 0 to the total number of
@@ -42,10 +53,10 @@ class Board:
         column = move % self.size
 
         # Check that the selected cell is empty.
-        if self.board[row][column] != self.empty:
+        if self._board[row][column] != self.empty:
             return False
 
-        self.board[row][column] = player
+        self._board[row][column] = player
         return True
 
     def find_winner(self):
@@ -69,7 +80,7 @@ class Board:
         :returns: the number of the winning player as an integer, or 0 if there
             is no winner.
         """
-        for row in self.board:
+        for row in self._board:
             if row[0] != 0 and all_items_in_collection_equal(row):
                 return row[0]
         return 0
@@ -83,7 +94,7 @@ class Board:
         for column in range(0, self.size):
             column_data = []
             for row in range(0, self.size):
-                column_data.append(self.board[row][column])
+                column_data.append(self._board[row][column])
             if all_items_in_collection_equal(column_data):
                 return column_data[0]
         return 0
@@ -97,14 +108,14 @@ class Board:
         """
         diagonal_data = []
         for row_and_column in range(0, self.size):
-            diagonal_data.append(self.board[row_and_column][row_and_column])
+            diagonal_data.append(self._board[row_and_column][row_and_column])
         if all_items_in_collection_equal(diagonal_data):
             return diagonal_data[0]
 
         diagonal_data = []
         column = self.size - 1
         for row in range(0, self.size):
-            diagonal_data.append(self.board[row][column])
+            diagonal_data.append(self._board[row][column])
             column -= 1
         if all_items_in_collection_equal(diagonal_data):
             return diagonal_data[0]
@@ -115,15 +126,21 @@ class Board:
         Check whether the board is full (so that no more moves can be made).
         :return: True if the board is full, False if not.
         """
-        for row in self.board:
+        for row in self._board:
             if self.empty in row:
                 return False
         return True
 
-    def get_max_move(self):
+    def get_maximum_move(self):
         """
-        Calculate the highest move possible, if all the game board cells are
-        numbered consecutively starting from 0.
+        Returns the highest move allowable on this board.
         :returns: The maximum move allowable on the board.
         """
-        return self.size*self.size - 1
+        return self._maximum_move
+
+    def get_minimum_move(self):
+        """
+        Return the lowest-numbered move allowable on this board.
+        :returns: the minimum move allowable on this board.
+        """
+        return self._minimum_move

@@ -52,16 +52,19 @@ class ConsoleUI:
                 print(vertical_separator * board_visual_width)
         print()
 
-    def get_current_player_move(self, current_player, max_move):
+    def get_current_player_move(self, current_player, minimum_move,
+                                maximum_move):
         """
         Prompt the current player for their move and return the input as an
         integer.
         :param current_player: The current player, represented as an integer.
-        :param max_move: The highest move allowable on the board.
+        :param minimum_move: The lowest move allowable on the board.
+        :param maximum_move: The highest move allowable on the board.
         :returns: The player's selected move as an integer.
         """
         player_icon = self.player_map[current_player]
-        prompt = f"Next move for player {player_icon} (0-{max_move}): "
+        prompt = (f"Next move for player {player_icon} " +
+                  f"({minimum_move}-{maximum_move}): ")
         error = self.invalid_move_error
         return get_int_from_input(prompt, error)
 
