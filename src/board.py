@@ -16,6 +16,9 @@ class Board:
         """
         self.size = size
         self.empty = 0
+        self._minimum_move = 0
+        self._maximum_move = self.size*self.size - 1
+
         self._board = []
         for row_number in range(0, size):
             row = [self.empty] * size
@@ -38,8 +41,9 @@ class Board:
         :returns: True if the move was successful, False if the move is invalid
             based on the board state
         """
-        # Check whether the move is outside the maximum bound of the board.
-        if move >= self.size * self.size:
+        # Check whether the move is outside the minimum or maximum bounds of
+        # the board.
+        if move < self._minimum_move or move > self._maximum_move:
             return False
 
         # The move is provided as an integer from 0 to the total number of
@@ -127,10 +131,16 @@ class Board:
                 return False
         return True
 
-    def get_max_move(self):
+    def get_maximum_move(self):
         """
-        Calculate the highest move possible, if all the game board cells are
-        numbered consecutively starting from 0.
+        Returns the highest move allowable on this board.
         :returns: The maximum move allowable on the board.
         """
-        return self.size*self.size - 1
+        return self._maximum_move
+
+    def get_minimum_move(self):
+        """
+        Return the lowest-numbered move allowable on this board.
+        :returns: the minimum move allowable on this board.
+        """
+        return self._minimum_move

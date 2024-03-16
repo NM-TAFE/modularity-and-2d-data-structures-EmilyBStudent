@@ -164,4 +164,4 @@ class TestBoard(unittest.TestCase):
         self.assertFalse(self.board.is_board_full())
 
     def test_max_move_calculated_correctly(self):
-        self.assertEqual(8, self.board.get_max_move())
+        self.assertEqual(8, self.board.get_maximum_move())

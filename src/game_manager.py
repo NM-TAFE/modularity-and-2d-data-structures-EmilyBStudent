@@ -26,7 +26,8 @@ class GameManager:
         self.current_player = 1
 
         self.board = Board()
-        self.MAX_MOVE = self.board.get_max_move()
+        self._minimum_move = self.board.get_minimum_move()
+        self._maximum_move = self.board.get_maximum_move()
         self.ui = ConsoleUI(self.player_map)
 
     def main(self):
@@ -40,15 +41,7 @@ class GameManager:
             if self.check_for_tie():
                 return
 
-            # Get next move
-            while True:
-                move = self.ui.get_current_player_move(self.current_player,
-                                                       self.MAX_MOVE)
-                if 0 <= int(move) and self.board.add_player_move(self.current_player, move):
-                    break
-                else:
-                    self.ui.show_invalid_move_error()
-
+            self.take_current_player_turn()
             self.switch_players()
 
     def display_board(self):
@@ -77,6 +70,17 @@ class GameManager:
             self.ui.announce_tie()
             return True
         return False
+
+    def take_current_player_turn(self):
+        """Get the current player's chosen move and action it."""
+        while True:
+            move = self.ui.get_current_player_move(self.current_player,
+                                                   self._minimum_move,
+                                                   self._maximum_move)
+            if self.board.add_player_move(self.current_player, move):
+                return
+            else:
+                self.ui.show_invalid_move_error()
 
     def switch_players(self):
         """Switch to the next player's turn."""
