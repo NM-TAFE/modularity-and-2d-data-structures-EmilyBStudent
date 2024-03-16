@@ -20,7 +20,9 @@ class GameManager:
             1: 'X',
             2: 'O',
         }
+        self.number_of_players = len(self.player_map) - 1
         self.current_player = 1
+
         self.board = Board()
         self.MAX_MOVE = self.board.get_max_move()
         self.ui = ConsoleUI(self.player_map)
@@ -48,11 +50,8 @@ class GameManager:
                 else:
                     self.ui.show_invalid_move_error()
 
-            # Switch players
-            if self.current_player == len(self.player_map) - 1:
-                self.current_player = 1
-            else:
-                self.current_player += 1
+            self.switch_players()
+
 
     def check_for_winner(self):
         """
@@ -76,6 +75,13 @@ class GameManager:
             self.ui.announce_tie()
             return True
         return False
+
+    def switch_players(self):
+        """Switch to the next player's turn."""
+        if self.current_player == self.number_of_players:
+            self.current_player = 1
+        else:
+            self.current_player += 1
 
 
 if __name__ == "__main__":
