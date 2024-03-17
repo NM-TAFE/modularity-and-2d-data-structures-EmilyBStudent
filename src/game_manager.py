@@ -14,7 +14,7 @@ class GameManager:
     gameplay loop for a game of Tic-Tac-Toe.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialise the Tic-Tac-Toe game"""
         # Map player numbers to visual representation as single characters of
         # text. 0 represents an empty space.
@@ -31,7 +31,7 @@ class GameManager:
         self._maximum_move = self.board.get_maximum_move()
         self.ui = ConsoleUI(self.player_map)
 
-    def main(self):
+    def main(self) -> None:
         """The main gameplay loop for the Tic-Tac-Toe game"""
         while True:
             self.display_board()
@@ -42,11 +42,11 @@ class GameManager:
             self.take_current_player_turn()
             self.switch_players()
 
-    def display_board(self):
+    def display_board(self) -> None:
         """Display the current state of the game board."""
         self.ui.display_2d_board(self.board.get_board_data())
 
-    def check_for_winner(self):
+    def check_for_winner(self) -> bool:
         """
         Check if one of the players has won the game. If so, announce the
         winner.
@@ -58,7 +58,7 @@ class GameManager:
             return True
         return False
 
-    def check_for_tie(self):
+    def check_for_tie(self) -> bool:
         """
         Check if the game has ended in a tie. If so, announce the fact to the
         players
@@ -69,7 +69,7 @@ class GameManager:
             return True
         return False
 
-    def take_current_player_turn(self):
+    def take_current_player_turn(self) -> None:
         """Get the current player's chosen move and action it."""
         while True:
             move = self.ui.get_current_player_move(self.current_player,
@@ -83,7 +83,7 @@ class GameManager:
             except PositionAlreadyFilledException:
                 self.ui.show_invalid_move_error()
 
-    def switch_players(self):
+    def switch_players(self) -> None:
         """Switch to the next player's turn."""
         if self.current_player == self.number_of_players:
             self.current_player = 1
