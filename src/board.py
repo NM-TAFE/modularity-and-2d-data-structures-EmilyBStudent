@@ -42,28 +42,37 @@ class Board:
     def add_player_move(self, player: int, move: int) -> bool:
         """
         Add the given player's chosen move to the board.
-        :param player: the player making their move, represented as an integer
+        :param player: the player making their move, represented as an integer.
         :param move: the player's chosen move, represented as an integer
-            between 0 and board size to the power of 2 (i.e. the number of
-            cells on the board)
+            between 0 and the number of cells on the board minus 1.
         :returns: True if the move was successful, False if the move is invalid
-            based on the board state
+            based on the board state.
         """
-        # Check whether the move is outside the minimum or maximum bounds of
-        # the board.
-        if move < self._minimum_move or move > self._maximum_move:
-            return False
-
         # The move is provided as an integer from 0 to the total number of
         # cells on the board, so we need to convert it into indices for a
         # 2-dimensional data structure.
         row = math.floor(move / self.size)
         column = move % self.size
+        return self.add_move_by_coordinates(player, row, column)
 
-        # Check that the selected cell is empty.
+    def add_move_by_coordinates(self, player: int, row: int,
+                                column: int) -> bool:
+        """
+        Add the given player's chosen move to the board, using coordinates
+        to identify the move on the board.
+        :param player: the player making their move, represented as an integer.
+        :param row: the row number of the player's chosen move.
+        :param column: the column number of the player's chosen move.
+        :returns: True if the move was successful, False if the move is invalid
+            based on the board state.
+        """
+        if row < 0 or column < 0:
+            return False
+        if row >= self.size or column >= self.size:
+            return False
         if self._board[row][column] != self.empty:
             return False
-
+        
         self._board[row][column] = player
         return True
 
