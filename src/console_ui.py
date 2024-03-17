@@ -8,7 +8,7 @@ from utilities import get_int_from_input
 
 class ConsoleUI:
     """A console UI for a Tic-Tac-Toe game."""
-    def __init__(self, player_map: dict):
+    def __init__(self, player_map: dict) -> None:
         """
         Initialise the UI by recording the mapping between player number and
         symbol/piece, to use when displaying the board or printing messages.
@@ -21,8 +21,9 @@ class ConsoleUI:
         self.player_map = player_map
         self.invalid_move_error = "Invalid move, try again."
 
-    def display_2d_board(self, board_data, horizontal_separator=" | ",
-                         vertical_separator="-"):
+    def display_2d_board(self, board_data: list[list],
+                         horizontal_separator: str = " | ",
+                         vertical_separator: str = "-") -> None:
         """
         Display a 2-dimensional data structure as a game grid, using the
         player_map dictionary to represent the data appropriately.
@@ -52,8 +53,8 @@ class ConsoleUI:
                 print(vertical_separator * board_visual_width)
         print()
 
-    def get_current_player_move(self, current_player, minimum_move,
-                                maximum_move):
+    def get_current_player_move(self, current_player: int, minimum_move: int,
+                                maximum_move: int) -> int:
         """
         Prompt the current player for their move and return the input as an
         integer.
@@ -68,17 +69,17 @@ class ConsoleUI:
         error = self.invalid_move_error
         return get_int_from_input(prompt, error)
 
-    def announce_winner(self, winner: int):
+    def announce_winner(self, winner: int) -> None:
         """
         Announce the winner of the Tic-Tac-Toe game.
         :param winner: the winning player, represented as an integer.
         """
         print(f"Player {self.player_map[winner]} wins!")
 
-    def announce_tie(self):
+    def announce_tie(self) -> None:
         """Announce that the game has ended in a tie."""
         print("It's a tie!")
 
-    def show_invalid_move_error(self):
+    def show_invalid_move_error(self) -> None:
         """Inform the player that their selected move is invalid."""
         print(self.invalid_move_error)
