@@ -153,13 +153,34 @@ class Board:
         :returns: the number of the winning player as an integer, or 0 if there
             is no winner.
         """
+        winner = self.find_southeast_diagonal_winner()
+        if winner > 0:
+            return winner
+        winner = self.find_southwest_diagonal_winner()
+        return winner
+
+    def find_southeast_diagonal_winner(self) -> int:
+        """
+        Check for win conditions on the diagonal running northwest to
+        southeast.
+        :returns: the number of the winning player as an integer, or 0 if there
+            is no winner.
+        """
         diagonal_data = []
         for row_and_column in range(0, self.size):
             diagonal_data.append(self._board[row_and_column][row_and_column])
         if (diagonal_data[0] != 0 and
                 all_items_in_collection_equal(diagonal_data)):
             return diagonal_data[0]
+        return 0
 
+    def find_southwest_diagonal_winner(self) -> int:
+        """
+        Check for win conditions on the diagonal running northeast to
+        southwest.
+        :returns: the number of the winning player as an integer, or 0 if there
+            is no winner.
+        """
         diagonal_data = []
         column = self.size - 1
         for row in range(0, self.size):
