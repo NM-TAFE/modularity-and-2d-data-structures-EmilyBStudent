@@ -18,7 +18,15 @@ class Board:
         self.empty = 0
         self._minimum_move = 0
         self._maximum_move = self.size*self.size - 1
+        self.construct_board(size)
 
+    def construct_board(self, size: int) -> None:
+        """
+        Construct a 2D data structure of the given size, to maintain the state
+        of the game board
+        :param size: The size of the game board on each side (the board is
+            always square)
+        """
         self._board = []
         for row_number in range(0, size):
             row = [self.empty] * size
