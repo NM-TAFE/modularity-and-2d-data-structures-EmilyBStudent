@@ -126,7 +126,7 @@ class Board:
     def is_board_full(self):
         """
         Check whether the board is full (so that no more moves can be made).
-        :return: True if the board is full, False if not.
+        :returns: True if the board is full, False if not.
         """
         for row in self._board:
             if self.empty in row:
