@@ -4,7 +4,7 @@ Author: Emily Boegheim
 """
 
 
-def all_items_in_collection_equal(collection):
+def all_items_in_collection_equal(collection: list | tuple) -> bool:
     """
     Check whether all items in a given collection (e.g. a list) are equal to
     one another.
@@ -22,8 +22,8 @@ def all_items_in_collection_equal(collection):
         return True
 
 
-def get_int_from_input(prompt="Please enter an integer: ",
-                       error="Please enter a valid integer."):
+def get_int_from_input(prompt: str = "Please enter an integer: ",
+                       error: str = "Please enter a valid integer.") -> int:
     """
     Prompts the user to enter an integer using the console and parses the
     input. If the user's input cannot be parsed as an integer, prints an error
