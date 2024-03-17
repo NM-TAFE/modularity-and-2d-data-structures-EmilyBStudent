@@ -1,4 +1,5 @@
 from board import Board
+from board import MoveOutOfBoundsException, PositionAlreadyFilledException
 import unittest
 
 
@@ -43,17 +44,17 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(0, self.board._board[1][0])
 
     def test_move_below_zero_fails(self):
-        result = self.board.add_player_move(1, -1)
-        self.assertFalse(result)
+        self.assertRaises(MoveOutOfBoundsException,
+                          self.board.add_player_move, 1, -1)
 
     def test_move_higher_than_last_cell_number_fails(self):
-        result = self.board.add_player_move(1, 9)
-        self.assertFalse(result)
+        self.assertRaises(MoveOutOfBoundsException,
+                          self.board.add_player_move, 1, 9)
 
     def test_move_fails_if_cell_already_filled(self):
         self.board.add_player_move(1, 0)
-        result = self.board.add_player_move(2, 0)
-        self.assertFalse(result)
+        self.assertRaises(PositionAlreadyFilledException,
+                          self.board.add_player_move, 2, 0)
 
     def test_move_with_coordinates_added_to_correct_cell(self):
         self.board.add_move_by_coordinates(1, 2, 2)
@@ -64,25 +65,25 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(0, self.board._board[1][2])
 
     def test_move_with_row_below_zero_fails(self):
-        result = self.board.add_move_by_coordinates(1, -1, 1)
-        self.assertFalse(result)
+        self.assertRaises(MoveOutOfBoundsException,
+                          self.board.add_move_by_coordinates, 1, -1, 1)
 
     def test_move_with_column_below_zero_fails(self):
-        result = self.board.add_move_by_coordinates(1, 1, -1)
-        self.assertFalse(result)
+        self.assertRaises(MoveOutOfBoundsException,
+                          self.board.add_move_by_coordinates, 1, 1, -1)
 
     def test_move_with_row_higher_than_board_size_fails(self):
-        result = self.board.add_move_by_coordinates(1, 3, 0)
-        self.assertFalse(result)
+        self.assertRaises(MoveOutOfBoundsException,
+                          self.board.add_move_by_coordinates, 1, 3, 0)
 
     def test_move_with_column_higher_than_board_size_fails(self):
-        result = self.board.add_move_by_coordinates(1, 0, 3)
-        self.assertFalse(result)
+        self.assertRaises(MoveOutOfBoundsException,
+                          self.board.add_move_by_coordinates, 1, 0, 3)
 
     def test_move_with_coordinates_fails_if_cell_already_filled(self):
         self.board.add_move_by_coordinates(1, 0, 0)
-        result = self.board.add_move_by_coordinates(2, 0, 0)
-        self.assertFalse(result)
+        self.assertRaises(PositionAlreadyFilledException,
+                          self.board.add_move_by_coordinates, 2, 0, 0)
 
     def test_horizontal_winner_found_in_first_row(self):
         self.board.add_player_move(1, 0)

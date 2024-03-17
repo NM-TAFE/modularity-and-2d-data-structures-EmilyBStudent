@@ -4,6 +4,27 @@ from utilities import all_items_in_collection_equal
 import math
 
 
+class BoardException(Exception):
+    """Base class for exceptions related to game board state."""
+    pass
+
+
+class MoveOutOfBoundsException(BoardException):
+    """
+    An exception indicating that the player's move is outside the bounds of
+    the game board.
+    """
+    pass
+
+
+class PositionAlreadyFilledException(BoardException):
+    """
+    An exception indicating that the player's move is invalid as the cell
+    is already filled.
+    """
+    pass
+
+
 class Board:
     """A Tic-Tac-Toe game board and its current state"""
 
@@ -45,15 +66,21 @@ class Board:
         :param player: the player making their move, represented as an integer.
         :param move: the player's chosen move, represented as an integer
             between 0 and the number of cells on the board minus 1.
-        :returns: True if the move was successful, False if the move is invalid
-            based on the board state.
+        :returns: True if the move was successful.
+        :except MoveOutOfBoundsException: indicates that the player's move is
+            outside the bounds of the game board.
+        :except PositionAlreadyFilledException: indicates that the player's
+            move is invalid as the space is already filled.
         """
         # The move is provided as an integer from 0 to the total number of
         # cells on the board, so we need to convert it into indices for a
         # 2-dimensional data structure.
         row = math.floor(move / self.size)
         column = move % self.size
-        return self.add_move_by_coordinates(player, row, column)
+        try:
+            return self.add_move_by_coordinates(player, row, column)
+        except BoardException:
+            raise
 
     def add_move_by_coordinates(self, player: int, row: int,
                                 column: int) -> bool:
@@ -63,16 +90,19 @@ class Board:
         :param player: the player making their move, represented as an integer.
         :param row: the row number of the player's chosen move.
         :param column: the column number of the player's chosen move.
-        :returns: True if the move was successful, False if the move is invalid
-            based on the board state.
+        :returns: True if the move was successful.
+        :except MoveOutOfBoundsException: indicates that the player's move is
+            outside the bounds of the game board.
+        :except PositionAlreadyFilledException: indicates that the player's
+            move is invalid as the space is already filled.
         """
         if row < 0 or column < 0:
-            return False
+            raise MoveOutOfBoundsException
         if row >= self.size or column >= self.size:
-            return False
+            raise MoveOutOfBoundsException
         if self._board[row][column] != self.empty:
-            return False
-        
+            raise PositionAlreadyFilledException
+
         self._board[row][column] = player
         return True
 
