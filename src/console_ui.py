@@ -19,7 +19,9 @@ class ConsoleUI:
             an empty space.
         """
         self.player_map = player_map
-        self.invalid_move_error = "Invalid move, try again."
+        self.input_not_int_error = "Invalid move, try again."
+        self.input_out_of_bounds_error = "Invalid move, try again."
+        self.position_already_filled_error = "Invalid move, try again."
 
     def display_2d_board(self, board_data: list[list],
                          horizontal_separator: str = " | ",
@@ -66,7 +68,7 @@ class ConsoleUI:
         player_icon = self.player_map[current_player]
         prompt = (f"Next move for player {player_icon} " +
                   f"({minimum_move}-{maximum_move}): ")
-        error = self.invalid_move_error
+        error = self.input_not_int_error
         return get_int_from_input(prompt, error)
 
     def announce_winner(self, winner: int) -> None:
@@ -80,6 +82,16 @@ class ConsoleUI:
         """Announce that the game has ended in a tie."""
         print("It's a tie!")
 
-    def show_invalid_move_error(self) -> None:
-        """Inform the player that their selected move is invalid."""
-        print(self.invalid_move_error)
+    def show_input_out_of_bounds_error(self) -> None:
+        """
+        Inform the player that their selected move is invalid due to being
+        out of bounds.
+        """
+        print(self.input_out_of_bounds_error)
+
+    def show_position_already_filled_error(self) -> None:
+        """
+        Inform the player that their selected move is invalid as the chosen
+        position is already filled.
+        """
+        print(self.position_already_filled_error)

@@ -79,9 +79,9 @@ class GameManager:
                 if self.board.add_player_move(self.current_player, move):
                     return
             except MoveOutOfBoundsException:
-                self.ui.show_invalid_move_error()
+                self.ui.show_input_out_of_bounds_error()
             except PositionAlreadyFilledException:
-                self.ui.show_invalid_move_error()
+                self.ui.show_position_already_filled_error()
 
     def switch_players(self) -> None:
         """Switch to the next player's turn."""
