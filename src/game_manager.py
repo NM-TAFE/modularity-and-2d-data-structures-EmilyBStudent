@@ -4,6 +4,7 @@ basic program flow and gameplay loop for a game of Tic-Tac-Toe.
 """
 
 from board import Board
+from board import MoveOutOfBoundsException, PositionAlreadyFilledException
 from console_ui import ConsoleUI
 
 
@@ -74,9 +75,12 @@ class GameManager:
             move = self.ui.get_current_player_move(self.current_player,
                                                    self._minimum_move,
                                                    self._maximum_move)
-            if self.board.add_player_move(self.current_player, move):
-                return
-            else:
+            try:
+                if self.board.add_player_move(self.current_player, move):
+                    return
+            except MoveOutOfBoundsException:
+                self.ui.show_invalid_move_error()
+            except PositionAlreadyFilledException:
                 self.ui.show_invalid_move_error()
 
     def switch_players(self):
