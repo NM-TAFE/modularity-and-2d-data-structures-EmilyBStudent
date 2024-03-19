@@ -76,8 +76,8 @@ class ConsoleUI:
         :param column_separator: the separator to use between columns.
         """
         separator_width = (len(column_separator))
-        board_visual_width = (board_width*(separator_width + 1) -
-                              separator_width)
+        board_visual_width = (board_width * (separator_width+1)
+                              - separator_width)
         print(row_separator * board_visual_width)
 
     def get_current_player_move(self, current_player: int, minimum_move: int,

@@ -3,8 +3,9 @@ Provides a class representing a Tic-Tac-Toe game board and its state
 Author: Emily Boegheim
 """
 
-from utilities import all_items_in_collection_equal
 import math
+
+from utilities import all_items_in_collection_equal
 
 
 class BoardException(Exception):
