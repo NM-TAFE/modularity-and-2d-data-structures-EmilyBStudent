@@ -1,6 +1,7 @@
 """
 Tic-Tac-Toe game manager. This provides a GameManager class which contains the
 basic program flow and gameplay loop for a game of Tic-Tac-Toe.
+Author: Emily Boegheim
 """
 
 from board import Board
